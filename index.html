@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery-1.10.2.js"></script>
+<!-- 
+<script type="text/javascript" src="jquery-ui.js"></script>
+<link type="text/css" href="jquery-ui.css" />
+-->
+<script type="text/javascript" src="jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.2/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.2/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.2/demo/demo.css">
+
+<script type="text/javascript" src="Panorama/js-extend-map.js"></script>
+<script type="text/javascript" src="Panorama/three.js"></script>
+<script type="text/javascript" src="Panorama/config.js"></script>
+<script type="text/javascript" src="Panorama/panorama.js"></script>
+<style>
+    #panorama_container{min-width: 800px;min-height: 600px;}
+    #right_controller{position: absolute;right: 20px;margin-top: 10px;width:64px; min-height: 600px;}
+    #middle_bottom_controller{
+        position: absolute;
+        bottom:20px;
+        text-align: center;
+        width:800px;
+        height:64px;
+        margin-left:auto;
+        margin-right:auto;
+        }
+    img{width:64px; height:64px;}
+    #right_controller img{margin-top:10px; margin-bottom: 10px;}
+    #right_controller img:hover{cursor: pointer;}
+    #middle_bottom_controller img{ margin-left:10px; margin-right: 10px;}
+    #middle_bottom_controller img:hover{cursor:pointer;}
+    #fullscreen{position: absolute;bottom: 5px;left:0px;}
+</style>
+<title>全景</title>
+</head>
+
+<body>
+    <div id="panorama_container">
+        <div id="right_controller">
+                <img id="introduce_txt" src="image/introduce_txt.png" title="介绍"/>
+                <img id="introduce_radio" src="image/radio.png" title="语音介绍"/>
+                <img id="map" src="image/map.png" title="地图"/>
+                <img id="fullscreen" src="image/full_screen.png" title="全屏"/>
+        </div>
+        <div id="middle_bottom_controller">
+           <img id="preview"  src="image/preview.png" title="上一个"/>
+           <img id="thumbnail"  src="image/thumbnail.png" title="缩略图"/>
+           <img id="next"  src="image/next.png" title="下一个"/>
+        </div>
+        
+    </div>
+    <script>
+     $(function(){
+        var panorama=new Panorama($("#panorama_container"),config);
+     });
+    </script>
+    <script>
+     //设置各个图标的提示
+      $(function() {
+        $('#introduce_txt').tooltip({
+            position: 'left',
+            content: '<span style="color:#fff">介绍</span>',
+            onShow: function(){
+                $(this).tooltip('tip').css({
+                    backgroundColor: '#666',
+                    borderColor: '#666'
+                });
+            }
+        });
+
+        $('#introduce_radio').tooltip({
+				position: 'left',
+				content: '<span style="color:#fff">语音介绍</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+        
+        $('#map').tooltip({
+				position: 'left',
+				content: '<span style="color:#fff">地图</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+        
+        $('#fullscreen').tooltip({
+				position: 'left',
+				content: '<span style="color:#fff">全屏</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+        
+
+        $('#preview').tooltip({
+				position: 'top',
+				content: '<span style="color:#fff">上一个</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+        
+
+        $('#thumbnail').tooltip({
+				position: 'top',
+				content: '<span style="color:#fff">缩略</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+        
+
+        $('#next').tooltip({
+				position: 'top',
+				content: '<span style="color:#fff">下一个</span>',
+				onShow: function(){
+					$(this).tooltip('tip').css({
+						backgroundColor: '#666',
+						borderColor: '#666'
+					});
+				}
+        });
+    });
+    </script>
+</body>
+</html>
