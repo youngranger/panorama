@@ -1,0 +1,10 @@
+.compass_size{
+    width:128px;height:128px;
+}
+.compass_hide{display:none;}
+.compass_positon{position: absolute;top:5px;left:5px;}
+
+.compass_shell{background-image: url("../Image/compass-shell.png");background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;}
+.compass_degree{background-image: url("../Image/compass-degree.png");background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;}
+.compass_point{background-image: url("../Image/compass-point.png");background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;}
+.compass_shell-degree{background-image: url("compass-shell-degree.png");background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;}

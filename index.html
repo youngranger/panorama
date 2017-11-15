@@ -16,6 +16,10 @@
 <script type="text/javascript" src="Panorama/three.js"></script>
 <script type="text/javascript" src="Panorama/config.js"></script>
 <script type="text/javascript" src="Panorama/panorama.js"></script>
+
+<script type="text/javascript" src="Compass/jquery.rotate.min.js"></script>
+<script type="text/javascript" src="Compass/Compass.js"></script>
+<link rel="stylesheet" type="text/css" href="Compass/Css/compass.css">
 <style>
     #panorama_container{min-width: 800px;min-height: 600px;}
     #right_controller{position: absolute;right: 20px;margin-top: 10px;width:64px; min-height: 600px;}
@@ -56,6 +60,8 @@
     <script>
      $(function(){
         var panorama=new Panorama($("#panorama_container"),config);
+        var compass=new Compass($("#panorama_container"));
+        panorama.compass=compass;
      });
     </script>
     <script>

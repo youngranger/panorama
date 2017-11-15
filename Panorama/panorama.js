@@ -27,20 +27,21 @@ class Panorama{
          this.INTERSECTED=null;//设置鼠标滑过某个对象时的效果，此变量用来缓存鼠标滑动到的对象。
 
          //供实现拖拽旋转效果使用的参数
-         this.lon = 0;
-         this.lat = 0;
+         //this.lon = 0;
+         //this.lat = 0;
          this.mouseCoordinateWhenMouseDown=new THREE.Vector2();//鼠标按下时的坐标
          //*************************************************************************
 
          /**场景中使用的全局变量 */
          //************************************************************* */
          this.imageTextures=new Map();//图片纹理,存储加载的图片资源，像箭头之类的。
-         //this.hotSpots=new Array();//热点
-         //this.marks=new Array();//存储文本对象，包括热点的文本对象和标注的文本对象
          this.sphereMesh=null;//球体网格
          this.fontOptions=null;//字体加载后生成的字体选项      
          this.panoramaTextures=new Map();//资源池，存放全景图生成的全景纹理
          //************************************************************* */
+  
+         //***************需要配合使用的外部插件************************* */
+         this.compass=null;
 
          /**异步启动系统 */
          //********************************************************* */
@@ -212,7 +213,6 @@ class Panorama{
                             //if(!intersects[0].object.isHotspotIconObject){//如果命中的不是热点的图标对象（即箭头），则返回，不需要响应。
                               //  return;
                             //} 
-                             //console.log("mouseEnter");
                                     if (this.INTERSECTED != intersects[0].object) {//缓存的对象与当前对象不相等，则说明鼠标移动到新的对象上了 
                                                 if (this.INTERSECTED){//如果缓存的对象存在，说明鼠标从一个对象直接移动到了新的对象上，恢复缓存对象状态为鼠标未放置在其上时的状态
                                                     //恢复缓存对象为未被鼠标放置时的状态
@@ -244,19 +244,22 @@ class Panorama{
             }
         
                 if(this.mouseDrag){//处理鼠标拖拽事件     
-                          
-                    this.lon = (this.mouseCoordinateWhenMouseDown.x - this.event.clientX) * 0.1 + this.onPointerDownLon;
-                    this.lat = (this.event.clientY - this.mouseCoordinateWhenMouseDown.y) * 0.1 + this.onPointerDownLat;
-        
-                    this.lat = Math.max(-85, Math.min(85, this.lat));
-                    this.phi = THREE.Math.degToRad(90 - this.lat);
-                    this.theta = THREE.Math.degToRad(this.lon);
-            
-                    this.camera.target.x = 500 * Math.sin(this.phi) * Math.cos(this.theta);
-                    this.camera.target.y = 500 * Math.cos(this.phi);
-                    this.camera.target.z = 500 * Math.sin(this.phi) * Math.sin(this.theta);
-                    this.camera.lookAt(this.camera.target);
-                    
+
+                    this.sphereMesh.rotation.y+= (this.mouseCoordinateWhenMouseDown.x - this.event.clientX)*0.1*Math.PI/720;
+                    var roY=this.sphereMesh.rotation.y;
+                    if(this.compass!=null){
+                        this.compass.rotate(roY*180/Math.PI);
+                    }
+                    this.sphereMesh.rotation.x+=(this.event.clientY - this.mouseCoordinateWhenMouseDown.y)*0.1*Math.PI/720;
+                    if(this.sphereMesh.rotation.x>(80/180*Math.PI)){
+                        this.sphereMesh.rotation.x=80/180*Math.PI;
+                    }
+                    if(this.sphereMesh.rotation.x<-(80/180*Math.PI)){
+                        this.sphereMesh.rotation.x=-(80/180*Math.PI);
+                    }
+                    //不会自旋转
+                    //this.mouseCoordinateWhenMouseDown.x=this.event.clientX;
+                    //this.mouseCoordinateWhenMouseDown.y=this.event.clientY;
                 }
                 
                 //自动旋转
@@ -570,8 +573,8 @@ dispose() {
                this.event=event;
 
                //记录鼠标按下时的经纬，供拖拽使用。
-               this.onPointerDownLon = this.lon;
-               this.onPointerDownLat = this.lat;
+               //this.onPointerDownLon = this.lon;
+               //this.onPointerDownLat = this.lat;
         })
         .on("mousemove",event=>{
              if(this.mouseDown){//此时是拖拽状态
